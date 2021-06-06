@@ -76,8 +76,12 @@ TextField {
         } else {
             if (state == "error")
                 state = "passiveError"
-            else
+            else if (text.length) {
                 state = "passive"
+            } else {
+                state = ""
+            }
+                
         }
     }
 

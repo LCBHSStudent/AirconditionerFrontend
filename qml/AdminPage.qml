@@ -51,7 +51,7 @@ Page {
                     color: uiconfig.colorClouds
                     font.pixelSize: 14
                     font.family: uiconfig.fontFamily
-                    text: "target temperature: " + temperature + "°C"
+                    text: "target temperature: " + temperature.toFixed(1) + "°C"
                 }
                 
                 Text {
@@ -61,7 +61,7 @@ Page {
                         bottom: parent.bottom
                         margins: 20
                     }
-                    text: room_temperature + "°C"
+                    text: room_temperature.toFixed(1) + "°C"
                     color: uiconfig.colorClouds
                     font.pixelSize: 48
                     font.family: uiconfig.fontFamily

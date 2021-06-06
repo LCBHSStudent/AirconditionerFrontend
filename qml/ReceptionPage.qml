@@ -3,7 +3,9 @@ import QtQuick.Controls 2.15
 
 Page {
     background: Item {}
-
+    
+    property bool inCheckoutRoutine: false
+    
     LineInput {
         id: roomNumberInput
         width: formBG.width * 0.4
@@ -44,6 +46,7 @@ Page {
         }
         text: "Query Form"
         onClicked: {
+            inCheckoutRoutine = false
             backend.sendGetDetailRequest(roomNumberInput.value)
         }
     }
@@ -59,7 +62,25 @@ Page {
         }
         text: "Checkout"
         onClicked: {
-            backend.sendGetDetailRequest(roomNumberInput.value)
+            inCheckoutRoutine = true
+            backend.sendGetRoomBillRequest(roomNumberInput.value)
+        }
+    }
+    
+    Connections {
+        target: backend
+        function onSigGetRoomBill(fee) {
+            mainToast.showPopup("客户需要支付: " + fee.toFixed(1) + "元", "确认以支付")
+        }
+    }
+    
+    Connections {
+        target: mainToast
+        function onClicked() {
+            if (inCheckoutRoutine) {
+                inCheckoutRoutine = false
+                backend.sendUserCheckoutRequest(roomNumberInput.value)
+            }
         }
     }
     
@@ -217,6 +238,7 @@ Page {
                 if (cancel)
                     return
                 
+                inCheckoutRoutine = false
                 backend.sendRegisterCustomerRequest(regRoomNumber.value, regUserName.value, regPassword.value)
             }
         }

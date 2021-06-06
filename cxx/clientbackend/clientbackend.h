@@ -37,6 +37,8 @@ public FUNCTION:
         sendGetDetailRequest(int room_num);
     Q_INVOKABLE void    /*更新房间信息*/
         sendUpdateRoomInfoRequest(int room_num);
+    Q_INVOKABLE void    /*获取房间账单*/
+        sendGetRoomBillRequest(int room_num);
         
 signals:
     // 信号组，用于backend通知前端进行响应
@@ -54,6 +56,8 @@ signals:
         sigGetAllRoomData(QList<QVariantMap> rooms);
     void
         sigGetRoomData(QVariantMap data);
+    void
+        sigGetRoomBill(double fee);
     
 private slots:
     void    /*接收network helper组件送来的服务器数据报文*/

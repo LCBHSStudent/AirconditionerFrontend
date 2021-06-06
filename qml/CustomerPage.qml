@@ -4,9 +4,10 @@ import QtQuick.Controls.Material 2.15
 import QtGraphicalEffects 1.15
 
 Page {
+    id: cusRoot
     background: Item {}
     
-    property int roomNumber: 1001
+    property int roomNumber: -1
     property real temperature: 0
     property string windLevel: "stop"
     property string mode: "cold"
@@ -79,12 +80,6 @@ Page {
         }
     }
     
-    onRoomNumberChanged: {
-        if (roomNumber > 0) {
-            backend.sendUpdateRoomInfoRequest(roomNumber)
-        }
-    }
-    
     Image {
         anchors {
             right: parent.right
@@ -98,12 +93,18 @@ Page {
         source: "qrc:/res/power.png"
         layer.enabled: true
         layer.effect: ColorOverlay {
+            Behavior on color {
+                PropertyAnimation {
+                    duration: 200
+                }
+            }
+
             color: powerOn === "on"? uiconfig.colorEmerald: uiconfig.colorAlizarin
         }
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (powerOn === "off") {
+                if (powerOn !== "on") {
                     backend.sendFlipPowerRequest(true, roomNumber)
                 } else {
                     backend.sendFlipPowerRequest(false, roomNumber)
@@ -129,15 +130,6 @@ Page {
             width: 150
             height: 40
             model: ["cold", "hot", "wind", "dry", "sleep"]
-            
-            Component.onCompleted: {
-                for (var i = 0; i < 5; i++) {
-                    if (mode === model[i]) {
-                        currentIndex = i
-                        break
-                    }
-                }
-            }
             
             enabled: powerOn === "on"
             popup.onVisibleChanged: {
@@ -172,15 +164,6 @@ Page {
 
             model: ["stop", "low", "mid", "high"]
             id: windLevelCombo
-            
-            Component.onCompleted: {
-                for (var i = 0; i < 5; i++) {
-                    if (windLevel === model[i]) {
-                        currentIndex = i
-                        break
-                    }
-                }
-            }
             
             enabled: powerOn === "on"
             popup.onVisibleChanged: {
@@ -249,6 +232,21 @@ Page {
             mode = data["mode"]
             windLevel = data["wind_level"]
             power = data["total_power"]
+            fee = data["total_fee"]
+            
+            for (var i = 0; i < 4; i++) {
+                if (windLevel === windLevelCombo.model[i]) {
+                    windLevelCombo.currentIndex = i
+                    break
+                }
+            }
+            
+            for (i = 0; i < 5; i++) {
+                if (mode === modeCombo.model[i]) {
+                    modeCombo.currentIndex = i
+                    break
+                }
+            }
         }
     }
 }

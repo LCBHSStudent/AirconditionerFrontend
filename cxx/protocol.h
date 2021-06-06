@@ -28,6 +28,7 @@ constexpr auto TypeUserLogin        = "UserLogin";
 constexpr auto TypeAdminRegister	= "AdminRegister";
 constexpr auto TypeAdminLogin       = "AdminLogin";
 constexpr auto TypeUserCheckout     = "UserCheckout";
+constexpr auto TypeUserCheckoutRes  = "UserCheckoutRes";
 constexpr auto TypeUserFindById     = "UserFindById";
 constexpr auto TypeUserFindByIdRes  = "UserFindByIdRes";
 constexpr auto TypeUserFindAll      = "UserFindAll";

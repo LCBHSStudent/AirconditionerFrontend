@@ -127,6 +127,10 @@ void ClientBackend::slotGetServerMessage(QByteArray data) {
         reflector[TypeAirConditionerFindByRoomRes] = [this](QVariantMap&& var) {
             emit sigGetRoomData(var["air_conditioner"].toMap());
         };
+        // 获取房间账单
+        reflector[TypeFeeQueryRes] = [this](QVariantMap&& var) {
+            emit sigGetRoomBill(var["fee"].toMap()["cost"].toDouble());
+        };
     });
     
     
@@ -374,6 +378,25 @@ void ClientBackend::sendUpdateRoomInfoRequest(int room_num) {
     data.setObject(_data);
     
     obj.insert("type", TypeAirConditionerFindByRoom);
+    obj.insert("data", QString(data.toJson()));
+    
+    req.setObject(obj);
+    
+    m_helper->sendToServer(req.toJson());
+}
+
+void ClientBackend::sendGetRoomBillRequest(int room_num) {
+    QJsonDocument req;
+    QJsonDocument data;
+    
+    QJsonObject obj;
+    QJsonObject _data;
+    
+    _data.insert("room_num", room_num);
+    
+    data.setObject(_data);
+    
+    obj.insert("type", TypeFeeQuery);
     obj.insert("data", QString(data.toJson()));
     
     req.setObject(obj);
