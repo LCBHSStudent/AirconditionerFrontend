@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/qml">
+        <file alias="main.qml">qml/main.qml</file>
+        <file alias="LineInput.qml">qml/LineInput.qml</file>
+        <file alias="LoginPage.qml">qml/LoginPage.qml</file>
+        <file alias="OutLineInput.qml">qml/OutLineInput.qml</file>
+        <file alias="AdminPage.qml">qml/AdminPage.qml</file>
+        <file alias="CusButton.qml">qml/CusButton.qml</file>
+        <file alias="UIConfig.qml">qml/UIConfig.qml</file>
+        <file alias="OneBtnToast.qml">qml/OneBtnToast.qml</file>
+        <file alias="ReceptionPage.qml">qml/ReceptionPage.qml</file>
+        <file alias="CustomerPage.qml">qml/CustomerPage.qml</file>
+        <file alias="ManagerPage.qml">qml/ManagerPage.qml</file>
+    </qresource>
+</RCC>

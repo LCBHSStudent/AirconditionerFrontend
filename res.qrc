@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/res">
+        <file alias="airconBg.png">res/airconBg.png</file>
+        <file alias="loginBg.png">res/loginBg.png</file>
+        <file alias="power.png">res/power.png</file>
+    </qresource>
+</RCC>
