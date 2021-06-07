@@ -153,7 +153,11 @@ void ClientBackend::slotGetServerMessage(QByteArray data) {
     
     
     auto magic = QJsonDocument::fromJson(resp["data"].toString().toUtf8());
-    reflector[resp["type"].toString()](magic.object().toVariantMap());
+    
+    auto callable = reflector.find(resp["type"].toString());
+    if (callable != reflector.end()) {
+        (*callable)(magic.object().toVariantMap());
+    }
 }
 
 /**
