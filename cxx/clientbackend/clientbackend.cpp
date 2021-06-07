@@ -108,6 +108,24 @@ void ClientBackend::slotGetServerMessage(QByteArray data) {
         // 详单
         reflector[TypeGetDetailListRes] = [this](QVariantMap&& var) {
             if (var["code"] == 200) {
+                LOG(Log, "") << var["detail"].toMap()["start_wind_list"] << var["detail"].toMap()["stop_wind_list"];
+                
+                auto start_wind_list = var["detail"].toMap()["start_wind_list"].toList();
+                auto stop_wind_list = var["detail"].toMap()["stop_wind_list"].toList();
+                auto total_wind_time = var["detail"].toMap()["total_wind_time"].toString();
+                
+                QString msg = "起始送风时刻: \n\t";
+                foreach (auto time, start_wind_list) {
+                    msg += QDateTime::fromTime_t(time.toLongLong()).toString() + " ";
+                }
+                msg += "\n停止送风时刻: \n\t";
+                foreach (auto time, stop_wind_list) {
+                    msg += QDateTime::fromTime_t(time.toLongLong()).toString() + " ";
+                }
+
+                emit sigGetRoomDetail(
+                    msg + "\n总送风时间: " + total_wind_time
+                );
                 
             } else {
                 emit sigShowPopup(QString::number(var["code"].toInt()) + ": " + var["msg"].toString(), "Retry");

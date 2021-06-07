@@ -210,14 +210,14 @@ Page {
             font.family: "UniDreamLED"
             font.pixelSize: 36
             color: uiconfig.colorEmerald
-            text: "Fee:    " + fee + "￥"
+            text: "Fee:    " + fee.toFixed(1) + "￥"
         }
         
         Text {
             font.family: "UniDreamLED"
             font.pixelSize: 36
             color: uiconfig.colorEmerald
-            text: "Power cost:    " + power + "￥"
+            text: "Power cost:    " + power.toFixed(1) + "￥"
         }
     }
     

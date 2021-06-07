@@ -98,6 +98,29 @@ Page {
         border.color: uiconfig.colorCarrot
         color: "#11FFFFFF"
         
+        ScrollView {
+            id: detailView
+            clip: true
+            anchors.fill: parent
+            anchors.margins: 10
+            TextArea {
+                id: detailFiled
+                width: parent.width
+                enabled: false
+                color: uiconfig.colorClouds
+                font.pixelSize: 16
+                background: Item {}
+            }
+        }
+        
+        
+        
+        Connections {
+            target: backend
+            function onSigGetRoomDetail(msg) {
+                detailFiled.append(msg)
+            }
+        }
     }
     
     Text {

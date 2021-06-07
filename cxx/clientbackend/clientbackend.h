@@ -50,14 +50,16 @@ signals:
         sigUserLogin(int status, QString msg);
     void    /*收到请求用户信息响应*/
         sigGetUserInfo(int status, QVariantMap userInfo);
-    void
+    void    /*展示弹窗*/
         sigShowPopup(QString msg, QString btn);
-    void
+    void    /*获取全部房间信息*/
         sigGetAllRoomData(QList<QVariantMap> rooms);
-    void
+    void    /*获取单个房间数据*/
         sigGetRoomData(QVariantMap data);
     void
         sigGetRoomBill(double fee);
+    void    /*获取房间详单*/
+        sigGetRoomDetail(QString msg);
     
 private slots:
     void    /*接收network helper组件送来的服务器数据报文*/
